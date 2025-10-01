@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Carritos Romántico</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto&family=Dancing+Script&display=swap" rel="stylesheet">
+<style>
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+  background: radial-gradient(#000428, #004e92);
+}
+
+/* Fondo animado con zoom y temblor */
+body::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(#000428, #004e92);
+  animation: zoomShake 6s infinite alternate;
+  z-index: -1;
+}
+@keyframes zoomShake {
+  0% {transform: scale(1) translate(0,0);}
+  25% {transform: scale(1.02) translate(5px, -5px);}
+  50% {transform: scale(1.04) translate(-5px, 5px);}
+  75% {transform: scale(1.02) translate(5px, 0);}
+  100% {transform: scale(1) translate(0,0);}
+}
+
+/* Estrellas de fondo */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle linear infinite;
+}
+@keyframes twinkle {
+  0%, 100% {opacity: 0.2;}
+  50% {opacity: 1;}
+}
+
+/* Pantalla inicial */
+#startScreen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  z-index: 10;
+  cursor: pointer;
+}
+#startScreen .mainImage {
+  width: 300px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255,255,255,0.6);
+}
+
+/* Presentación */
+#presentation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Carritos cayendo */
+.carrito {
+  position: absolute;
+  width: 50px;
+  animation: drop linear infinite;
+  z-index: 6;
+}
+@keyframes drop {
+  0% { top: -60px; transform: rotate(0deg);}
+  100% { top: 110%; transform: rotate(360deg);}
+}
+
+/* Texto principal con golpe/zoom repetido */
+.mainText {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #ffeb3b;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+  opacity: 0;
+  z-index: 8;
+}
+@keyframes punchZoom {
+  0% {transform: translateX(-50%) scale(0);}
+  20% {transform: translateX(-50%) scale(1.5);}
+  40% {transform: translateX(-50%) scale(1);}
+  60% {transform: translateX(-50%) scale(1.3);}
+  80% {transform: translateX(-50%) scale(1);}
+  100% {transform: translateX(-50%) scale(1);}
+}
+
+/* Cartas de amor flotando */
+.loveCard {
+  position: absolute;
+  width: 200px;
+  padding: 10px;
+  background: rgba(255,192,203,0.95);
+  border: 2px solid #fff;
+  border-radius: 15px;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: #800000;
+  opacity: 0;
+  z-index: 9;
+  animation: floatCard 6s ease-in-out infinite;
+}
+@keyframes floatCard {
+  0%,100% {transform: translateY(0) rotate(0deg); opacity: 0;}
+  10%,90% {opacity: 1;}
+  50% {transform: translateY(-50px) rotate(-5deg);}
+}
+
+/* Imagen ramo de rosas */
+.ramo {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  z-index: 9;
+  animation: floatRamo 6s ease-in-out infinite alternate;
+}
+@keyframes floatRamo {
+  0% {transform: translateX(-50%) translateY(0);}
+  50% {transform: translateX(-50%) translateY(-20px);}
+  100% {transform: translateX(-50%) translateY(0);}
+}
+
+/* Cartel de Feliz 31 Septiembre */
+#felizCartel {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #00f;
+  cursor: pointer;
+  z-index: 10;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+/* Carta gigante decorada */
+#bigCard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 90%;
+  max-width: 700px;
+  max-height: 90%;
+  overflow-y: auto;
+  background: linear-gradient(to bottom right, #ffe6f0, #fff0f5);
+  border: 4px solid #ff69b4;
+  border-radius: 25px;
+  padding: 25px;
+  text-align: left;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #800000;
+  box-shadow: 0 0 50px rgba(255,105,180,0.5);
+  z-index: 15;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+#bigCard img {
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+#bigCard.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  animation: cardPop 0.6s ease forwards;
+}
+@keyframes cardPop {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  60% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+  80% { transform: translate(-50%, -50%) scale(0.95); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Scroll estético */
+#bigCard::-webkit-scrollbar {
+  width: 8px;
+}
+#bigCard::-webkit-scrollbar-thumb {
+  background-color: #ff69b4;
+  border-radius: 4px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div id="startScreen">
+  <img src="img/bicho.png" class="mainImage" alt="Imagen principal">
+  <h1>💋 Dale un beso a la pantalla 💋</h1>
+</div>
+
+<div id="presentation">
+  <div class="carritosContainer"></div>
+  <img src="img/carrito02.png" class="ramo" alt="Ramo de rosas">
+  <div class="mainText">Para el niño más gangster, stiver Laiza, besitos en tu ojito 💖</div>
+  <div id="felizCartel">🎉 Feliz 31 de septiembre 💙</div>
+
+  <div id="bigCard">
+    <p><strong>Mi amor,</strong></p>
+    <p>Hoy siento la necesidad de abrirte mi corazón por completo y decirte todo lo que a veces no sé cómo expresar con palabras. Quiero que sepas que te amo con cada parte de mí, que te admiro más de lo que jamás imaginé poder admirar a alguien y que no quiero, bajo ninguna circunstancia, perderte.</p>
+    <p>Eres el mejor hombre que he conocido, y cada día descubro en ti motivos para enamorarme aún más. Me maravilla tu forma de ser, tus detalles, tu ternura y tu manera de hacerme sentir especial. Por todo esto y mucho más, siento que mereces todo lo bueno que la vida pueda darte, y más aún.</p>
+    <p>Hacerte este detalle no es solo un gesto, es la forma en la que intento decirte lo importante que eres para mí. Porque he aprendido a quererte de verdad, a mirarte con ojos llenos de amor cada día, a valorar cada momento contigo, a agradecer cada sonrisa, cada palabra, cada abrazo.</p>
+    <p>Quiero que sepas que mi amor por ti es sincero y profundo. No es algo pasajero; es algo que siento crecer dentro de mí cada vez que pienso en nuestro futuro juntos. Sueño con construir contigo una vida llena de felicidad, apoyo, complicidad y amor eterno.</p>
+    <p>No hay palabras suficientes para explicarte lo mucho que significas para mí, pero quiero que sientas, en cada línea de esta carta, que te amo con todo mi ser. Que cada lágrima que pueda caer al leer esto sea de emoción, de saber que este amor es real, y que estoy aquí, siempre, para ti.</p>
+    <p>Gracias por ser tú, por enseñarme a amar y por permitirme amarte. Gracias por tus detalles, tu paciencia, tu compañía y tu corazón. Te quiero más de lo que jamás creí que podría querer a alguien, y quiero que sepas que estoy dispuesta a darlo todo por ti, por nosotros y por nuestro futuro.</p>
+    <p>Con todo mi amor,</p>
+    <img src="img/bicho2.jpg" alt="Foto especial">
+  </div>
+
+  <audio id="bgMusic" src="img/ThoseEyes.mp3" loop></audio>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const startScreen = document.getElementById('startScreen');
+  const presentation = document.getElementById('presentation');
+  const music = document.getElementById('bgMusic');
+
+  // Al hacer clic en la pantalla inicial
+  startScreen.addEventListener('click', () => {
+    startScreen.style.display = 'none';
+    presentation.style.display = 'block';
+
+    // Reproducir música
+    music.play();
+
+    // Carritos cayendo
+    const carritosContainer = document.querySelector('.carritosContainer');
+    for(let i=0;i<10;i++){
+      const carrito = document.createElement('img');
+      carrito.src='img/grupal.png';
+      carrito.classList.add('carrito');
+      carrito.style.left = Math.random()*90 + '%';
+      carrito.style.animationDuration = 4 + Math.random()*3 + 's';
+      carritosContainer.appendChild(carrito);
+    }
+
+    // Cartas de amor flotando
+    const loveMessages = ["Te amo 💖","Eres el mejor 😘","Gracias por todo 💌","Siempre estaré contigo 🌹"];
+    loveMessages.forEach((text,index)=>{
+      const card = document.createElement('div');
+      card.classList.add('loveCard');
+      card.innerText = text;
+      card.style.top = (30 + index*20) + '%';
+      card.style.left = (60 - index*10) + '%';
+      presentation.appendChild(card);
+    });
+
+    // Animación texto principal
+    const mainText = document.querySelector('.mainText');
+    mainText.style.opacity = 1;
+    mainText.style.animation = 'punchZoom 1s ease forwards';
+  });
+
+  // Mostrar carta gigante
+  const felizCartel = document.getElementById('felizCartel');
+  const bigCard = document.getElementById('bigCard');
+  felizCartel.addEventListener('click', ()=>{ bigCard.classList.add('show'); });
+
+});
+</script>
+
+</body>
+</html>
